@@ -22,7 +22,7 @@ const getAll = async (_req, res) => {
 };
 
 const getById = async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   const response = await service.getById(id);
 
