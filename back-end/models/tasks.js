@@ -26,11 +26,11 @@ const getById = async (id) => {
 };
 
 const update = async (data) => {
-  const { id, ...newValues } = data;
+  const { taskId, ...newValues } = data;
 
   const db = await getConnection();
-  const { value } = await db.collection(DB_COLLECTION).findOndeAndUpdate(
-    { taskId: id },
+  const { value } = await db.collection(DB_COLLECTION).findOneAndUpdate(
+    { taskId },
     { $set: { ...newValues } },
     { returnDocument: 'after' },
   );
@@ -39,7 +39,7 @@ const update = async (data) => {
 
 const deleteById = async (id) => {
   const db = await getConnection();
-  const { value } = await db.collection('products').findOneAndDelete({ taskId: id });
+  const { value } = await db.collection(DB_COLLECTION).findOneAndDelete({ taskId: id });
 
   return value;
 };
