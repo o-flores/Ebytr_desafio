@@ -44,7 +44,7 @@ const deleteById = async (id) => {
   return value;
 };
 
-module.export = {
+module.exports = {
   create,
   getAll,
   getById,
