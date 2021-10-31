@@ -2,15 +2,16 @@ const service = require('../services/task');
 
 const create = async (req, res) => {
   const {
-    name,
+    taskId,
     description,
     createdAt,
     status,
     updatedAt,
+    dueDate,
   } = req.body;
 
   const data = {
-    name, description, createdAt, status, updatedAt,
+    taskId, description, createdAt, status, updatedAt, dueDate,
   };
   await service.create(data);
   res.status(200).json(data);
@@ -33,22 +34,22 @@ const getById = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   const {
-    name,
     description,
     createdAt,
     status,
     updatedAt,
+    dueDate,
   } = req.body;
 
   const { id } = req.params;
 
   const data = {
-    name,
+    taskId: id,
     description,
     createdAt,
     status,
     updatedAt,
-    id,
+    dueDate,
   };
   const response = await service.update(data);
 
