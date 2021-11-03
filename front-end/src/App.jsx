@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
+import TaskTable from './components/TaskTable';
 
 function App() {
   return (
-    <p>Hello world</p>
+    <TaskTable />
   );
 }
 
