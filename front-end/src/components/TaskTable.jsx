@@ -1,5 +1,6 @@
 import React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const tableColumns = [
   {
@@ -20,6 +21,18 @@ const tableColumns = [
   {
     field: 'updatedAt', headerName: 'Last modification', width: 150, type: 'date',
   },
+  {
+    field: 'actions',
+    type: 'actions',
+    width: 90,
+    getActions: (params) => [
+      <GridActionsCellItem
+        icon={<DeleteIcon />}
+        label="Delete"
+        onClick={() => console.log(params.id)}
+      />,
+    ],
+  },
 ];
 
 const rows = [
@@ -39,11 +52,11 @@ function TaskTable() {
 
     for (let i = 0; i < columnsName.length; i += 1) {
       const key = columnsName[i];
-      if (columnsName[i] !== 'id') {
+      if (columnsName[i] !== 'id' && columnsName[i] !== 'actions') {
         values[key] = getValue(id, key);
       }
     }
-    // console.log(values);
+    console.log(values);
     // fazer a chamada para a api para atualizar uma tarefa
   };
 
