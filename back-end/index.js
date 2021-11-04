@@ -11,7 +11,10 @@ const { createTaskValidation, updateTaskValidation } = require('./middlewares/ta
 
 const port = 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+}));
 app.use(bodyParser.json());
 
 app.get('/tasks', controller.getAll);
