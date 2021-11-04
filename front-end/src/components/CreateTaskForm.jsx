@@ -9,19 +9,40 @@ import DialogContentText from '@mui/material/DialogContentText';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
-function CreateTaskForm({ open, isOpen }) {
+const axios = require('axios').default;
+
+function CreateTaskForm({
+  open, isOpen, nextId, fetchRows,
+}) {
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [formError, setFormError] = useState({});
+
+  const createTask = async (taskDescription, taskDueDate) => {
+    try {
+      await axios.post('http://localhost:3000/task', {
+        id: nextId,
+        description: taskDescription,
+        createdAt: new Date(),
+        status: 'Não iniciada',
+        updatedAt: new Date(),
+        dueDate: taskDueDate,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleCreateTask = async () => {
     if (description.trim() === '') setFormError({ ...formError, description: true });
     else if (dueDate.trim() === '') setFormError({ ...formError, dueDate: true });
     else {
+      createTask(description, dueDate);
       setDescription('');
       setDueDate('');
       isOpen(false);
       setFormError({});
+      fetchRows();
     }
   };
 
@@ -84,6 +105,8 @@ function CreateTaskForm({ open, isOpen }) {
 CreateTaskForm.propTypes = {
   open: PropTypes.bool.isRequired,
   isOpen: PropTypes.func.isRequired,
+  nextId: PropTypes.string.isRequired,
+  fetchRows: PropTypes.func.isRequired,
 };
 
 export default CreateTaskForm;
