@@ -11,6 +11,12 @@ function TaskTable() {
   const [rows, setRows] = useState([]);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [isCreateTaskFormOpen, setIsCreateTaskFormOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState('');
+
+  const handleRenderDeleteAlert = (id) => {
+    setIsDeleteAlertOpen(true);
+    setDeleteId(id);
+  };
 
   const tableColumns = [
     {
@@ -35,11 +41,11 @@ function TaskTable() {
       field: 'actions',
       type: 'actions',
       width: 90,
-      getActions: () => [
+      getActions: (params) => [
         <GridActionsCellItem
           icon={<DeleteIcon />}
           label="Delete"
-          onClick={() => setIsDeleteAlertOpen(true)}
+          onClick={() => handleRenderDeleteAlert(params.id)}
         />,
       ],
     },
@@ -51,7 +57,7 @@ function TaskTable() {
       setRows(data);
     };
     fetchRows();
-  }, []);
+  }, [rows]);
 
   const handleEditStop = (params) => {
     const { getValue, id, columns } = params;
@@ -84,7 +90,12 @@ function TaskTable() {
         editMode="row"
         onRowEditStop={handleEditStop}
       />
-      <DeleteAlert open={isDeleteAlertOpen} isOpen={setIsDeleteAlertOpen} />
+      <DeleteAlert
+        open={isDeleteAlertOpen}
+        isOpen={setIsDeleteAlertOpen}
+        id={deleteId}
+        setId={setDeleteId}
+      />
       <CreateTaskForm open={isCreateTaskFormOpen} isOpen={setIsCreateTaskFormOpen} />
     </div>
   );
