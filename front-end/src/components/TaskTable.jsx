@@ -89,14 +89,17 @@ function TaskTable() {
   };
 
   return (
-    <div style={{ width: '80%', margin: 'auto' }}>
+    <div style={{
+      width: '80%', margin: 'auto', backgroundColor: '#fff', borderRadius: 10,
+    }}
+    >
       <Button onClick={() => setIsCreateTaskFormOpen(true)}>
         Create task
       </Button>
       <DataGrid
         rows={rows}
         columns={tableColumns}
-        pageSize={10}
+        pageSize={5}
         rowsPerPageOptions={[10]}
         autoHeight
         disableSelectionOnClick
