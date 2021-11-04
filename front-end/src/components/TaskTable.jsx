@@ -2,10 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@mui/material/Button';
+import { makeStyles } from '@material-ui/styles';
 import DeleteAlert from './DeleteAlert';
 import CreateTaskForm from './CreateTaskForm';
 
 const axios = require('axios').default;
+
+const useStyles = makeStyles({
+  root: {
+    '& .rows': {
+      color: '#808080',
+    },
+    '& .column-header': {
+      fontSize: 15,
+    },
+  },
+});
 
 function TaskTable() {
   const [rows, setRows] = useState([]);
@@ -13,6 +25,7 @@ function TaskTable() {
   const [isCreateTaskFormOpen, setIsCreateTaskFormOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
   const [nextId, setNextId] = useState('');
+  const classes = useStyles();
 
   const handleRenderDeleteAlert = (id) => {
     setIsDeleteAlertOpen(true);
@@ -21,22 +34,22 @@ function TaskTable() {
 
   const tableColumns = [
     {
-      field: 'id', headerName: 'ID', width: 95,
+      field: 'id', headerName: 'ID', width: 10, headerClassName: 'column-header',
     },
     {
-      field: 'description', headerName: 'Description', width: 150, editable: true,
+      field: 'description', headerName: 'Descrição', editable: true, flex: 1, headerAlign: 'center', headerClassName: 'column-header',
     },
     {
-      field: 'createdAt', headerName: 'created At', width: 150, type: 'date',
+      field: 'createdAt', headerName: 'Criada em', type: 'date', flex: 0.25, headerClassName: 'column-header',
     },
     {
-      field: 'status', headerName: 'Status', width: 150, type: 'singleSelect', valueOptions: ['Em andamento', 'Finalizada', 'Não iniciada'], editable: true,
+      field: 'status', headerName: 'Status', flex: 0.25, width: 150, type: 'singleSelect', valueOptions: ['Em andamento', 'Finalizada', 'Não iniciada'], editable: true, headerClassName: 'column-header',
     },
     {
-      field: 'dueDate', headerName: 'Due date', width: 150, type: 'date', editable: true,
+      field: 'dueDate', headerName: 'Prazo', flex: 0.25, type: 'date', editable: true, headerClassName: 'column-header',
     },
     {
-      field: 'updatedAt', headerName: 'Last modification', width: 150, type: 'date',
+      field: 'updatedAt', headerName: 'Modificado em', flex: 0.25, type: 'date', headerClassName: 'column-header',
     },
     {
       field: 'actions',
@@ -106,6 +119,8 @@ function TaskTable() {
         disableMultipleSelection
         editMode="row"
         onRowEditStop={handleEditStop}
+        className={classes.root}
+        getRowClassName={() => 'rows'}
       />
       <DeleteAlert
         open={isDeleteAlertOpen}
