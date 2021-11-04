@@ -21,7 +21,7 @@ app.get('/task/lastId', controller.getLastId);
 app.get('/tasks', controller.getAll);
 app.get('/task/:id', controller.getById);
 app.post('/task', createTaskValidation, dateFormat, controller.create);
-app.put('/task/:id', updateTaskValidation, controller.update);
+app.put('/task/:id', updateTaskValidation, dateFormat, controller.update);
 app.delete('/task/:id', controller.deleteById);
 
 app.use(errorMiddleware);
