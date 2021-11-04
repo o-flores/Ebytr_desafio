@@ -2,7 +2,7 @@ const service = require('../services/task');
 
 const create = async (req, res) => {
   const {
-    taskId,
+    id,
     description,
     createdAt,
     status,
@@ -11,7 +11,7 @@ const create = async (req, res) => {
   } = req.body;
 
   const data = {
-    taskId, description, createdAt, status, updatedAt, dueDate,
+    id, description, createdAt, status, updatedAt, dueDate,
   };
   await service.create(data);
   res.status(200).json(data);
@@ -44,7 +44,7 @@ const update = async (req, res, next) => {
   const { id } = req.params;
 
   const data = {
-    taskId: id,
+    id,
     description,
     createdAt,
     status,
