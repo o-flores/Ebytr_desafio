@@ -8,12 +8,13 @@ import PropTypes from 'prop-types';
 const axios = require('axios').default;
 
 function DeleteAlert({
-  open, isOpen, id, setId,
+  open, isOpen, id, setId, fetchRows,
 }) {
   const handleDeleteTask = async () => {
     await axios.delete(`http://localhost:3000/task/${id}`);
     isOpen(false);
     setId('');
+    fetchRows();
   };
 
   return (
@@ -39,6 +40,7 @@ DeleteAlert.propTypes = {
   isOpen: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   setId: PropTypes.func.isRequired,
+  fetchRows: PropTypes.func.isRequired,
 };
 
 export default DeleteAlert;
