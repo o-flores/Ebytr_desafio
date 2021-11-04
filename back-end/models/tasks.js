@@ -12,13 +12,13 @@ const create = async (data) => {
 
 const getAll = async () => {
   const db = await getConnection();
-  const tasks = await db.collection(DB_COLLECTION).find({}).toArray();
+  const tasks = await db.collection(DB_COLLECTION).find({}, { projection: { _id: 0 } }).toArray();
   return tasks;
 };
 
 const getById = async (id) => {
   const db = await getConnection();
-  const task = await db.collection(DB_COLLECTION).findOne({ taskId: id });
+  const task = await db.collection(DB_COLLECTION).findOne({ id }, { projection: { _id: 0 } });
 
   if (!task) return false;
 
@@ -26,12 +26,12 @@ const getById = async (id) => {
 };
 
 const update = async (data) => {
-  const { taskId, ...newValues } = data;
-
+  const { id, ...newValues } = data;
   const db = await getConnection();
   const { value } = await db.collection(DB_COLLECTION).findOneAndUpdate(
-    { taskId },
+    { id },
     { $set: { ...newValues } },
+    { projection: { _id: 0 } },
     { returnDocument: 'after' },
   );
   return value;
@@ -39,7 +39,7 @@ const update = async (data) => {
 
 const deleteById = async (id) => {
   const db = await getConnection();
-  const { value } = await db.collection(DB_COLLECTION).findOneAndDelete({ taskId: id });
+  const { value } = await db.collection(DB_COLLECTION).findOneAndDelete({ id });
 
   return value;
 };
