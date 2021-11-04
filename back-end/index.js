@@ -1,6 +1,7 @@
 const express = require('express');
 
 const app = express();
+const cors = require('cors');
 
 const bodyParser = require('body-parser');
 const controller = require('./controllers/task');
@@ -9,6 +10,7 @@ const { createTaskValidation, updateTaskValidation } = require('./middlewares/ta
 
 const port = 3000;
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/tasks', controller.getAll);
