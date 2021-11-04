@@ -12,6 +12,7 @@ function TaskTable() {
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [isCreateTaskFormOpen, setIsCreateTaskFormOpen] = useState(false);
   const [deleteId, setDeleteId] = useState('');
+  const [nextId, setNextId] = useState('');
 
   const handleRenderDeleteAlert = (id) => {
     setIsDeleteAlertOpen(true);
@@ -51,13 +52,14 @@ function TaskTable() {
     },
   ];
 
+  const fetchRows = async () => {
+    const { data } = await axios.get('http://localhost:3000/tasks');
+    setRows(data);
+    setNextId(String(data.length + 1));
+  };
   useEffect(() => {
-    const fetchRows = async () => {
-      const { data } = await axios.get('http://localhost:3000/tasks');
-      setRows(data);
-    };
     fetchRows();
-  }, [rows]);
+  }, []);
 
   const handleEditStop = (params) => {
     const { getValue, id, columns } = params;
@@ -96,7 +98,12 @@ function TaskTable() {
         id={deleteId}
         setId={setDeleteId}
       />
-      <CreateTaskForm open={isCreateTaskFormOpen} isOpen={setIsCreateTaskFormOpen} />
+      <CreateTaskForm
+        open={isCreateTaskFormOpen}
+        isOpen={setIsCreateTaskFormOpen}
+        nextId={nextId}
+        fetchRows={fetchRows}
+      />
     </div>
   );
 }
