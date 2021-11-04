@@ -44,10 +44,21 @@ const deleteById = async (id) => {
   return value;
 };
 
+const getLastId = async () => {
+  const db = await getConnection();
+  const id = await db.collection(DB_COLLECTION)
+    .find({}, { projection: { id: 1, _id: 0 } }).sort({ id: -1 }).toArray();
+
+  if (id.length === 0) return [{ id: '0' }];
+
+  return id;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   deleteById,
+  getLastId,
 };
