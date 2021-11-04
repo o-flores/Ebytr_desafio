@@ -97,6 +97,7 @@ function TaskTable() {
         isOpen={setIsDeleteAlertOpen}
         id={deleteId}
         setId={setDeleteId}
+        fetchRows={fetchRows}
       />
       <CreateTaskForm
         open={isCreateTaskFormOpen}
