@@ -8,7 +8,7 @@ function Header() {
     <AppBar
       position="static"
       sx={{
-        marginBottom: 5, backgroundColor: '#808080', display: 'flex', alignItems: 'center', padding: 2,
+        marginBottom: 5, backgroundColor: '#808080', display: 'flex', alignItems: 'center', padding: 2, color: 'black',
       }}
     >
       <Toolbar>
