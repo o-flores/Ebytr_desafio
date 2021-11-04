@@ -57,6 +57,11 @@ function TaskTable() {
     setRows(data);
   };
 
+  const updateRow = async (id, payload) => {
+    await axios.put(`http://localhost:3000/task/${id}`, payload);
+    fetchRows();
+  };
+
   const fetchNextId = async () => {
     const { data } = await axios.get('http://localhost:3000/task/lastId');
     setNextId(String(Number(data[0].id) + 1));
@@ -66,19 +71,21 @@ function TaskTable() {
     fetchNextId();
   }, []);
 
-  const handleEditStop = (params) => {
+  const handleEditStop = async (params) => {
     const { getValue, id, columns } = params;
     const columnsName = columns.map((key) => key.field);
     const values = {};
+    const editableHeaders = ['description', 'status', 'dueDate'];
 
     for (let i = 0; i < columnsName.length; i += 1) {
       const key = columnsName[i];
-      if (columnsName[i] !== 'id' && columnsName[i] !== 'actions') {
+      if (editableHeaders.includes(columnsName[i]) || columnsName[i] === 'createdAt') {
         values[key] = getValue(id, key);
       }
     }
-    // console.log(values);
-    // fazer a chamada para a api para atualizar uma tarefa
+    values.updatedAt = new Date();
+
+    await updateRow(id, values);
   };
 
   return (
