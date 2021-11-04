@@ -37,7 +37,7 @@ function CreateTaskForm({
     if (description.trim() === '') setFormError({ ...formError, description: true });
     else if (dueDate.trim() === '') setFormError({ ...formError, dueDate: true });
     else {
-      createTask(description, dueDate);
+      await createTask(description, dueDate);
       setDescription('');
       setDueDate('');
       isOpen(false);
