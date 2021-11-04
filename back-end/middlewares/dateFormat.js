@@ -5,8 +5,9 @@ const formatDate = (data) => {
   return `${month}/${date}/${year}`;
 };
 
-const formatDueDate = (data) => {
-  const date = data.getDate() + 1;
+const formatDueDate = (data, method) => {
+  let date = data.getDate() + 1;
+  if (method === 'PUT') date = data.getDate();
   const month = data.getMonth() + 1;
   const year = data.getFullYear();
   return `${month}/${date}/${year}`;
@@ -21,9 +22,10 @@ const dateFormatter = (req, res, next) => {
     description,
     status,
   } = req.body;
+
   const newcreatedAt = formatDate(createdAt);
   const newupdatedAt = formatDate(updatedAt);
-  const newdueDate = formatDueDate(dueDate);
+  const newdueDate = formatDueDate(dueDate, req.method);
 
   const newBody = {
     id,
