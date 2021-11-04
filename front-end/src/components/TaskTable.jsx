@@ -110,6 +110,7 @@ function TaskTable() {
         id={deleteId}
         setId={setDeleteId}
         fetchRows={fetchRows}
+        setNextId={fetchNextId}
       />
       <CreateTaskForm
         open={isCreateTaskFormOpen}
