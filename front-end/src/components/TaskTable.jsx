@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@mui/material/Button';
 import DeleteAlert from './DeleteAlert';
+import CreateTaskForm from './CreateTaskForm';
 
 const axios = require('axios').default;
 
 function TaskTable() {
   const [rows, setRows] = useState([]);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  const [isCreateTaskFormOpen, setIsCreateTaskFormOpen] = useState(false);
 
   const tableColumns = [
     {
@@ -67,6 +70,9 @@ function TaskTable() {
 
   return (
     <div style={{ width: '80%', margin: 'auto' }}>
+      <Button onClick={() => setIsCreateTaskFormOpen(true)}>
+        Create task
+      </Button>
       <DataGrid
         rows={rows}
         columns={tableColumns}
@@ -79,6 +85,7 @@ function TaskTable() {
         onRowEditStop={handleEditStop}
       />
       <DeleteAlert open={isDeleteAlertOpen} isOpen={setIsDeleteAlertOpen} />
+      <CreateTaskForm open={isCreateTaskFormOpen} isOpen={setIsCreateTaskFormOpen} />
     </div>
   );
 }
