@@ -12,10 +12,24 @@ import Box from '@mui/material/Box';
 function CreateTaskForm({ open, isOpen }) {
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
+  const [formError, setFormError] = useState({});
 
   const handleCreateTask = async () => {
+    if (description.trim() === '') setFormError({ ...formError, description: true });
+    else if (dueDate.trim() === '') setFormError({ ...formError, dueDate: true });
+    else {
+      setDescription('');
+      setDueDate('');
+      isOpen(false);
+      setFormError({});
+    }
+  };
+
+  const handleCloseButton = () => {
     setDescription('');
     setDueDate('');
+    isOpen(false);
+    setFormError({});
     isOpen(false);
   };
   return (
@@ -40,6 +54,8 @@ function CreateTaskForm({ open, isOpen }) {
             required
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            error={formError.description}
+            helperText={formError.description ? 'Digite um valor válido' : ''}
           />
           <TextField
             margin="dense"
@@ -52,12 +68,14 @@ function CreateTaskForm({ open, isOpen }) {
             InputLabelProps={{
               shrink: true,
             }}
+            error={formError.dueDate}
+            helperText={formError.dueDate ? 'Escolha uma data' : ''}
           />
         </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCreateTask}>Criar</Button>
-        <Button onClick={() => isOpen(false)}>Voltar</Button>
+        <Button onClick={handleCloseButton}>Voltar</Button>
       </DialogActions>
     </Dialog>
   );
