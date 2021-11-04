@@ -5,7 +5,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 
-function DeleteAlert({ open, isOpen }) {
+const axios = require('axios').default;
+
+function DeleteAlert({
+  open, isOpen, id, setId,
+}) {
+  const handleDeleteTask = async () => {
+    await axios.delete(`http://localhost:3000/task/${id}`);
+    isOpen(false);
+    setId('');
+  };
+
   return (
     <Dialog
       open={open}
@@ -15,7 +25,7 @@ function DeleteAlert({ open, isOpen }) {
         Tem certeza que quer deletar a tarefa?
       </DialogTitle>
       <DialogActions>
-        <Button onClick={() => isOpen(false)}>Sim</Button>
+        <Button onClick={handleDeleteTask}>Sim</Button>
         <Button onClick={() => isOpen(false)} autoFocus>
           Não
         </Button>
@@ -27,6 +37,8 @@ function DeleteAlert({ open, isOpen }) {
 DeleteAlert.propTypes = {
   open: PropTypes.bool.isRequired,
   isOpen: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  setId: PropTypes.func.isRequired,
 };
 
 export default DeleteAlert;
