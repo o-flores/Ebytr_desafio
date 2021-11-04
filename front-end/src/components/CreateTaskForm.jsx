@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 const axios = require('axios').default;
 
 function CreateTaskForm({
-  open, isOpen, nextId, fetchRows,
+  open, isOpen, nextId, fetchRows, setNextId,
 }) {
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -43,6 +43,7 @@ function CreateTaskForm({
       isOpen(false);
       setFormError({});
       fetchRows();
+      setNextId();
     }
   };
 
@@ -107,6 +108,7 @@ CreateTaskForm.propTypes = {
   isOpen: PropTypes.func.isRequired,
   nextId: PropTypes.string.isRequired,
   fetchRows: PropTypes.func.isRequired,
+  setNextId: PropTypes.func.isRequired,
 };
 
 export default CreateTaskForm;
