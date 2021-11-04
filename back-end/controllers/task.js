@@ -42,7 +42,7 @@ const update = async (req, res, next) => {
     status,
     updatedAt,
     dueDate,
-  } = req.body;
+  } = req.data;
 
   const { id } = req.params;
 
