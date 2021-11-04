@@ -69,10 +69,16 @@ const deleteById = async (req, res, next) => {
   return res.status(200).json(response);
 };
 
+const getLastId = async (req, res) => {
+  const response = await service.getLastId();
+  res.status(200).json(response);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   deleteById,
+  getLastId,
 };

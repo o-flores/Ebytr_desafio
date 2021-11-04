@@ -30,10 +30,13 @@ const deleteById = async (id) => {
   return deletedTask;
 };
 
+const getLastId = async () => model.getLastId();
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
   deleteById,
+  getLastId,
 };
