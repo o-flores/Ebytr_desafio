@@ -1,5 +1,7 @@
 const service = require('../services/task');
 
+const ID = '_id';
+
 const create = async (req, res) => {
   const {
     id,
@@ -8,13 +10,14 @@ const create = async (req, res) => {
     status,
     updatedAt,
     dueDate,
-  } = req.body;
+  } = req.data;
 
   const data = {
     id, description, createdAt, status, updatedAt, dueDate,
   };
-  await service.create(data);
-  res.status(200).json(data);
+  const task = await service.create(data);
+  delete task[ID];
+  res.status(200).json(task);
 };
 
 const getAll = async (_req, res) => {
