@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@material-ui/icons/Delete';
+
+const axios = require('axios').default;
 
 const tableColumns = [
   {
@@ -35,16 +37,17 @@ const tableColumns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1, description: 'lavar louça', createdAt: '2020-11-30', status: 'Finalizada', dueDate: '2020-12-30', updatedAt: '2020-11-30',
-  },
-  {
-    id: 2, description: 'lavar louça', createdAt: '2020-11-30', status: 'Finalizada', dueDate: '2020-12-30', updatedAt: '2020-11-30',
-  },
-];
-
 function TaskTable() {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const fetchRows = async () => {
+      const { data } = await axios.get('http://localhost:3001/tasks');
+      setRows(data);
+    };
+    fetchRows();
+  }, []);
+
   const handleEditStop = (params) => {
     const { getValue, id, columns } = params;
     const columnsName = columns.map((key) => key.field);
@@ -56,7 +59,7 @@ function TaskTable() {
         values[key] = getValue(id, key);
       }
     }
-    console.log(values);
+    // console.log(values);
     // fazer a chamada para a api para atualizar uma tarefa
   };
 
