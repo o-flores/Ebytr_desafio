@@ -55,10 +55,15 @@ function TaskTable() {
   const fetchRows = async () => {
     const { data } = await axios.get('http://localhost:3000/tasks');
     setRows(data);
-    setNextId(String(data.length + 1));
+  };
+
+  const fetchNextId = async () => {
+    const { data } = await axios.get('http://localhost:3000/task/lastId');
+    setNextId(String(Number(data[0].id) + 1));
   };
   useEffect(() => {
     fetchRows();
+    fetchNextId();
   }, []);
 
   const handleEditStop = (params) => {
@@ -103,6 +108,7 @@ function TaskTable() {
         open={isCreateTaskFormOpen}
         isOpen={setIsCreateTaskFormOpen}
         nextId={nextId}
+        setNextId={fetchNextId}
         fetchRows={fetchRows}
       />
     </div>
