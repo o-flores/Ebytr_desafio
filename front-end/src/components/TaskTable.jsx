@@ -102,42 +102,45 @@ function TaskTable() {
   };
 
   return (
-    <div style={{
-      width: '80%', margin: 'auto', backgroundColor: '#fff', borderRadius: 10,
-    }}
-    >
-      <Button onClick={() => setIsCreateTaskFormOpen(true)}>
-        Create task
+    <>
+      <Button sx={{ margin: 'auto', width: '100%' }} color="info" onClick={() => setIsCreateTaskFormOpen(true)}>
+        + Criar tarefa
       </Button>
-      <DataGrid
-        rows={rows}
-        columns={tableColumns}
-        pageSize={5}
-        rowsPerPageOptions={[10]}
-        autoHeight
-        disableSelectionOnClick
-        disableMultipleSelection
-        editMode="row"
-        onRowEditStop={handleEditStop}
-        className={classes.root}
-        getRowClassName={() => 'rows'}
-      />
-      <DeleteAlert
-        open={isDeleteAlertOpen}
-        isOpen={setIsDeleteAlertOpen}
-        id={deleteId}
-        setId={setDeleteId}
-        fetchRows={fetchRows}
-        setNextId={fetchNextId}
-      />
-      <CreateTaskForm
-        open={isCreateTaskFormOpen}
-        isOpen={setIsCreateTaskFormOpen}
-        nextId={nextId}
-        setNextId={fetchNextId}
-        fetchRows={fetchRows}
-      />
-    </div>
+      <div style={{
+        width: '80%', margin: 'auto', backgroundColor: '#fff', borderRadius: 10,
+      }}
+      >
+        <DataGrid
+          rows={rows}
+          columns={tableColumns}
+          pageSize={5}
+          rowsPerPageOptions={[10]}
+          autoHeight
+          disableSelectionOnClick
+          disableMultipleSelection
+          editMode="row"
+          onRowEditStop={handleEditStop}
+          className={classes.root}
+          getRowClassName={() => 'rows'}
+          disableColumnMenu
+        />
+        <DeleteAlert
+          open={isDeleteAlertOpen}
+          isOpen={setIsDeleteAlertOpen}
+          id={deleteId}
+          setId={setDeleteId}
+          fetchRows={fetchRows}
+          setNextId={fetchNextId}
+        />
+        <CreateTaskForm
+          open={isCreateTaskFormOpen}
+          isOpen={setIsCreateTaskFormOpen}
+          nextId={nextId}
+          setNextId={fetchNextId}
+          fetchRows={fetchRows}
+        />
+      </div>
+    </>
   );
 }
 
