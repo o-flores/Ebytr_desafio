@@ -11,7 +11,7 @@ function DeleteAlert({ open, isOpen }) {
       open={open}
       onClose={() => isOpen(false)}
     >
-      <DialogTitle id="alert-dialog-title">
+      <DialogTitle>
         Tem certeza que quer deletar a tarefa?
       </DialogTitle>
       <DialogActions>
