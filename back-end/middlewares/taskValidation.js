@@ -2,7 +2,7 @@ const Joi = require('joi');
 const validator = require('express-joi-validation').createValidator({ passError: true });
 
 const createTaskSchema = Joi.object({
-  taskId: Joi.string().required(),
+  id: Joi.string().required(),
   description: Joi.string().required(),
   createdAt: Joi.date().required(),
   status: Joi.string().required(),
