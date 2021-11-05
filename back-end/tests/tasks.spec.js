@@ -160,4 +160,14 @@ describe('Atualiza as tarefas', () => {
     expect(response.body.error).to.have.property('message');
     expect(response.body.error.message).to.be.equal('"status" is required');
   });
+
+  it('Não é possível atualizar tarefa sem data de criação', async () => {
+    const { createdAt, ...valuesWithoutCreatedAt } = DEFAULT_TASK;
+    const { body: { id } } = await chai.request(server).post('/task').send(DEFAULT_TASK);
+    const response = await chai.request(server).put(`/task/${id}`).send(valuesWithoutCreatedAt);
+
+    expect(response).to.have.status(400);
+    expect(response.body.error).to.have.property('message');
+    expect(response.body.error.message).to.be.equal('"createdAt" is required');
+  });
 });
