@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -54,5 +55,14 @@ describe('Verifica as tarefas', () => {
     expect(response).to.be.a('object');
     expect(response.body).to.have.property('id');
     expect(response.body).not.to.have.property('_id');
+  });
+
+  it('Não é possível adicionar uma nova tarefa sem id', async () => {
+    const { id, valuesWithoutId } = DEFAULT_TASK;
+    const response = await chai.request(server).post('/task').send(valuesWithoutId);
+
+    expect(response).to.have.status(400);
+    expect(response.body.error).to.have.property('message');
+    expect(response.body.error.message).to.be.equal('"id" is required');
   });
 });
