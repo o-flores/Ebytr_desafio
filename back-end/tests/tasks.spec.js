@@ -221,3 +221,21 @@ describe('Deletar tarefa', () => {
     expect(response.body.error.message).to.be.equal('Task does not exist');
   });
 });
+
+describe('Lista as tarefas', () => {
+  beforeEach(async () => {
+    const mockDB = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(mockDB);
+  });
+
+  afterEach(() => {
+    MongoClient.connect.restore();
+  });
+
+  it('É possível listar todas as tarefas', async () => {
+    const response = await chai.request(server).get('/tasks');
+
+    expect(response).to.have.status(200);
+    expect(response.body).to.be.an('array');
+  });
+});
