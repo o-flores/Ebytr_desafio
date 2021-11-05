@@ -180,4 +180,14 @@ describe('Atualiza as tarefas', () => {
     expect(response.body.error).to.have.property('message');
     expect(response.body.error.message).to.be.equal('"dueDate" is required');
   });
+
+  it('Não é possível atualizar tarefa sem data da ultima alteração', async () => {
+    const { updatedAt, ...valuesWithoutUpdatedAt } = DEFAULT_TASK;
+    const { body: { id } } = await chai.request(server).post('/task').send(DEFAULT_TASK);
+    const response = await chai.request(server).put(`/task/${id}`).send(valuesWithoutUpdatedAt);
+
+    expect(response).to.have.status(400);
+    expect(response.body.error).to.have.property('message');
+    expect(response.body.error.message).to.be.equal('"updatedAt" is required');
+  });
 });
