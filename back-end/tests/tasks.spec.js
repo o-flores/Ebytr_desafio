@@ -58,11 +58,20 @@ describe('Verifica as tarefas', () => {
   });
 
   it('Não é possível adicionar uma nova tarefa sem id', async () => {
-    const { id, valuesWithoutId } = DEFAULT_TASK;
+    const { id, ...valuesWithoutId } = DEFAULT_TASK;
     const response = await chai.request(server).post('/task').send(valuesWithoutId);
 
     expect(response).to.have.status(400);
     expect(response.body.error).to.have.property('message');
     expect(response.body.error.message).to.be.equal('"id" is required');
+  });
+
+  it('Não é possível adicionar uma nova tarefa sem descrição', async () => {
+    const { description, ...valuesWithoutDescription } = DEFAULT_TASK;
+    const response = await chai.request(server).post('/task').send(valuesWithoutDescription);
+
+    expect(response).to.have.status(400);
+    expect(response.body.error).to.have.property('message');
+    expect(response.body.error.message).to.be.equal('"description" is required');
   });
 });
