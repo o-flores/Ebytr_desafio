@@ -191,3 +191,24 @@ describe('Atualiza as tarefas', () => {
     expect(response.body.error.message).to.be.equal('"updatedAt" is required');
   });
 });
+
+describe('Deletar tarefa', () => {
+  beforeEach(async () => {
+    const mockDB = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(mockDB);
+  });
+
+  afterEach(() => {
+    MongoClient.connect.restore();
+  });
+
+  it('É possível deletar uma tarefa', async () => {
+    const { body: { id } } = await chai.request(server).post('/task').send(DEFAULT_TASK);
+    const response = await chai.request(server).delete(`/task/${id}`);
+
+    expect(response).to.have.status(200);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('id');
+    expect(response.body.id).to.be.equal(id);
+  });
+});
