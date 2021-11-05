@@ -131,4 +131,13 @@ describe('Atualiza as tarefas', () => {
     expect(response.body).to.have.property('id');
     expect(response.body.description).to.be.equal(DEFAULT_TASK_UPDATED.description);
   });
+
+  it('Não é possível atualizar tarefa com id incorreto', async () => {
+    const response = await chai.request(server).put('/task/99999').send(DEFAULT_TASK_UPDATED);
+
+    expect(response).to.have.status(404);
+    expect(response).to.be.a('object');
+    expect(response.body).to.have.property('error');
+    expect(response.body.error.message).to.be.equal('Task does not exist');
+  });
 });
