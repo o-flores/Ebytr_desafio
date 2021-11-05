@@ -9,7 +9,7 @@ const errorMiddleware = require('./middlewares/error');
 const dateFormat = require('./middlewares/dateFormat');
 const { createTaskValidation, updateTaskValidation } = require('./middlewares/taskValidation');
 
-const port = 3000;
+const port = 3001;
 
 app.use(cors({
   origin: '*',
