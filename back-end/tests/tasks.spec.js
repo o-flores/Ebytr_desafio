@@ -140,4 +140,24 @@ describe('Atualiza as tarefas', () => {
     expect(response.body).to.have.property('error');
     expect(response.body.error.message).to.be.equal('Task does not exist');
   });
+
+  it('Não é possível atualizar tarefa sem descrição', async () => {
+    const { description, ...valuesWithoutDescription } = DEFAULT_TASK;
+    const { body: { id } } = await chai.request(server).post('/task').send(DEFAULT_TASK);
+    const response = await chai.request(server).put(`/task/${id}`).send(valuesWithoutDescription);
+
+    expect(response).to.have.status(400);
+    expect(response.body.error).to.have.property('message');
+    expect(response.body.error.message).to.be.equal('"description" is required');
+  });
+
+  it('Não é possível atualizar tarefa sem status', async () => {
+    const { status, ...valuesWithoutStatus } = DEFAULT_TASK;
+    const { body: { id } } = await chai.request(server).post('/task').send(DEFAULT_TASK);
+    const response = await chai.request(server).put(`/task/${id}`).send(valuesWithoutStatus);
+
+    expect(response).to.have.status(400);
+    expect(response.body.error).to.have.property('message');
+    expect(response.body.error.message).to.be.equal('"status" is required');
+  });
 });
