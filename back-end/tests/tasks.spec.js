@@ -211,4 +211,13 @@ describe('Deletar tarefa', () => {
     expect(response.body).to.have.property('id');
     expect(response.body.id).to.be.equal(id);
   });
+
+  it('Não é possível deletar tarefa com id incorreto', async () => {
+    const response = await chai.request(server).delete('/task/99999').send(DEFAULT_TASK);
+
+    expect(response).to.have.status(404);
+    expect(response).to.be.a('object');
+    expect(response.body).to.have.property('error');
+    expect(response.body.error.message).to.be.equal('Task does not exist');
+  });
 });
