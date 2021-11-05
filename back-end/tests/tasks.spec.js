@@ -83,4 +83,13 @@ describe('Verifica as tarefas', () => {
     expect(response.body.error).to.have.property('message');
     expect(response.body.error.message).to.be.equal('"status" is required');
   });
+
+  it('Não é possível adicionar uma nova tarefa sem data de criação', async () => {
+    const { createdAt, ...valuesWithoutCreatedAt } = DEFAULT_TASK;
+    const response = await chai.request(server).post('/task').send(valuesWithoutCreatedAt);
+
+    expect(response).to.have.status(400);
+    expect(response.body.error).to.have.property('message');
+    expect(response.body.error.message).to.be.equal('"createdAt" is required');
+  });
 });
