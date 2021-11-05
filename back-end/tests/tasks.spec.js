@@ -74,4 +74,13 @@ describe('Verifica as tarefas', () => {
     expect(response.body.error).to.have.property('message');
     expect(response.body.error.message).to.be.equal('"description" is required');
   });
+
+  it('Não é possível adicionar uma nova tarefa sem status', async () => {
+    const { status, ...valuesWithoutStatus } = DEFAULT_TASK;
+    const response = await chai.request(server).post('/task').send(valuesWithoutStatus);
+
+    expect(response).to.have.status(400);
+    expect(response.body.error).to.have.property('message');
+    expect(response.body.error.message).to.be.equal('"status" is required');
+  });
 });
