@@ -27,3 +27,5 @@ app.delete('/task/:id', controller.deleteById);
 app.use(errorMiddleware);
 
 app.listen(port);
+
+module.exports = app;
