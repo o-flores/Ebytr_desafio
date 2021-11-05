@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const { MongoClient } = require('mongodb');
 const {
-  describe, it, before, after,
+  describe, it, beforeEach, afterEach,
 } = require('mocha');
 
 const server = require('../index');
@@ -39,12 +39,12 @@ const DEFAULT_TASK_UPDATED = {
 };
 
 describe('Adiciona novas tarefas', () => {
-  before(async () => {
+  beforeEach(async () => {
     const mockDB = await getConnection();
     sinon.stub(MongoClient, 'connect').resolves(mockDB);
   });
 
-  after(() => {
+  afterEach(() => {
     MongoClient.connect.restore();
   });
 
@@ -109,5 +109,26 @@ describe('Adiciona novas tarefas', () => {
     expect(response).to.have.status(400);
     expect(response.body.error).to.have.property('message');
     expect(response.body.error.message).to.be.equal('"updatedAt" is required');
+  });
+});
+
+describe('Atualiza as tarefas', () => {
+  beforeEach(async () => {
+    const mockDB = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(mockDB);
+  });
+
+  afterEach(() => {
+    MongoClient.connect.restore();
+  });
+
+  it('É possivel atualizar uma tarefa', async () => {
+    const { body: { id } } = await chai.request(server).post('/task').send(DEFAULT_TASK);
+    const response = await chai.request(server).put(`/task/${id}`).send(DEFAULT_TASK_UPDATED);
+
+    expect(response).to.have.status(200);
+    expect(response).to.be.a('object');
+    expect(response.body).to.have.property('id');
+    expect(response.body.description).to.be.equal(DEFAULT_TASK_UPDATED.description);
   });
 });
