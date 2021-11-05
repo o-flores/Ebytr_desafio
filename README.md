@@ -15,19 +15,19 @@ Abaixo uma imagem do resultado final, qualquer dúvida é só entrar em contato 
   - **_[Express](https://expressjs.com/)_**
   - **_[Node.js](https://nodejs.org/en/)_**
   - **_[React](https://reactjs.org)_**
-   - **_[MaterialUi](https://mui.com/)_**
+  - **_[MaterialUi](https://mui.com/)_**
 
 ## Ambiente
 Para poder rodar a aplicação você precisa ter o seguinte ambiente configurado:
-- NodeJS instalado
-- MongoDB instalado
-- npm instalado
+- NodeJS
+- MongoDB
+- [npm](https://docs.npmjs.com/)
 
 ## SetUp:
 
 1. Clone o projeto:
 ```javascript
-  git clone git@github.com:o-flores/Ebytr_desafio.git
+  git clone https://github.com/o-flores/Ebytr_desafio.git
 ```
 
 3. Instale as dependências:
@@ -54,7 +54,7 @@ Para poder rodar a aplicação você precisa ter o seguinte ambiente configurado
 ---
 
 ## Rodando os testes
-Entre no diretório back-end e execute o seguinte comando para testes do back-end:
+Entre no diretório back-end e execute o seguinte comando:
 
 ```javascript
   cd back-end
@@ -70,5 +70,5 @@ Para testar a cobertura de testes execute o seguinte comando:
 ## Levando o projeto ao próximo nível:
 - Fazer o deploy da aplicação no Heroku ou em outra plataforma
 - Realizar os testes do Front-End
-- 
+- Criação de tela de login e autenticação de usuários
 
