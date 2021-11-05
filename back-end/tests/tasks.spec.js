@@ -239,3 +239,23 @@ describe('Lista as tarefas', () => {
     expect(response.body).to.be.an('array');
   });
 });
+
+describe('Lista a tarefa por id', () => {
+  beforeEach(async () => {
+    const mockDB = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(mockDB);
+  });
+
+  afterEach(() => {
+    MongoClient.connect.restore();
+  });
+
+  it('É possível listar a tarefa por id', async () => {
+    const { body: { id } } = await chai.request(server).post('/task').send(DEFAULT_TASK);
+    const response = await chai.request(server).get(`/task/${id}`);
+
+    expect(response).to.have.status(200);
+    expect(response.body).to.be.an('object');
+    expect(response.body.id).to.be.equal(id);
+  });
+});
