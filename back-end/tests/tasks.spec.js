@@ -38,7 +38,7 @@ const DEFAULT_TASK_UPDATED = {
   dueDate: '2021-12-30',
 };
 
-describe('Verifica as tarefas', () => {
+describe('Adiciona novas tarefas', () => {
   before(async () => {
     const mockDB = await getConnection();
     sinon.stub(MongoClient, 'connect').resolves(mockDB);
@@ -48,7 +48,7 @@ describe('Verifica as tarefas', () => {
     MongoClient.connect.restore();
   });
 
-  it('Adiciona novas tarefas', async () => {
+  it('É possível adicionar novas tarefas', async () => {
     const response = await chai.request(server).post('/task').send(DEFAULT_TASK);
 
     expect(response).to.have.status(200);
